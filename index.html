@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>D1 Training Cary — Fenton Outdoor Workout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --red:#C8102E;
+  --red2:#a00d24;
+  --red-glow:rgba(200,16,46,0.28);
+  --black:#080808;
+  --s1:#111;
+  --s2:#181818;
+  --s3:#202020;
+  --border:rgba(255,255,255,0.07);
+  --border-red:rgba(200,16,46,0.55);
+  --white:#fff;
+  --muted:#7a7c7f;
+  --light:#b8babc;
+  --hf:'Barlow Condensed',sans-serif;
+  --bf:'Barlow',sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--bf);min-height:100vh;overflow-x:hidden}
+
+/* ── GRID BACKGROUND ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(200,16,46,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,16,46,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  background:var(--black);
+  padding:0;
+  overflow:hidden;
+}
+
+.hero-stripe{
+  background:var(--red);
+  padding:32px 24px 0;
+  position:relative;
+  clip-path:polygon(0 0,100% 0,100% 82%,0 100%);
+  padding-bottom:60px;
+}
+
+.hero-stripe::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,
+    transparent,transparent 18px,
+    rgba(0,0,0,0.06) 18px,rgba(0,0,0,0.06) 36px
+  );
+  pointer-events:none;
+}
+
+.hero-inner{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;
+}
+
+.logo-lockup{
+  display:inline-flex;align-items:center;justify-content:center;
+  animation:slideDown .5s cubic-bezier(.22,1,.36,1) both;
+  width:100%;
+}
+
+.logo-lockup svg{
+  width:min(140px,38vw);height:auto;
+  filter:drop-shadow(0 2px 16px rgba(0,0,0,0.35));
+}
+
+.hero-headline{
+  font-family:var(--hf);font-weight:900;
+  font-size:clamp(2.8rem,11vw,3.8rem);
+  letter-spacing:0.02em;line-height:.95;text-transform:uppercase;
+  color:var(--white);margin-top:22px;
+  text-shadow:0 2px 20px rgba(0,0,0,0.3);
+  animation:slideDown .5s .08s cubic-bezier(.22,1,.36,1) both;
+}
+
+.tagline-wrap{
+  margin-top:10px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  animation:slideDown .5s .16s cubic-bezier(.22,1,.36,1) both;
+}
+
+.tagline-main{
+  font-family:var(--hf);font-weight:600;font-size:clamp(.95rem,4vw,1.1rem);
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.82);
+}
+
+.tagline-event{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.25);
+  border-radius:100px;padding:5px 14px;margin-top:6px;
+  font-family:var(--hf);font-weight:700;font-size:0.78rem;
+  letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);
+}
+.tagline-event::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:#fff;opacity:.7;flex-shrink:0;
+  animation:pulse 1.8s ease-in-out infinite;
+}
+
+/* ── FORM SHELL ── */
+.form-wrap{
+  position:relative;z-index:1;
+  max-width:480px;margin:0 auto;
+  padding:20px 18px 52px;
+}
+
+/* ── SECTION HEADERS ── */
+.sec{
+  display:flex;align-items:center;gap:10px;
+  margin:26px 0 14px;
+}
+.sec-num{
+  width:24px;height:24px;border-radius:4px;
+  background:var(--red);
+  font-family:var(--hf);font-weight:900;font-size:.85rem;
+  color:var(--white);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.sec-title{
+  font-family:var(--hf);font-weight:800;font-size:.72rem;
+  letter-spacing:0.25em;text-transform:uppercase;color:var(--light);
+  flex:1;
+}
+.sec::after{
+  content:'';height:1px;flex:1;
+  background:linear-gradient(to right,var(--border-red),transparent);
+}
+
+/* ── GRID ── */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row + .row{margin-top:10px}
+
+/* ── FIELD ── */
+.f{display:flex;flex-direction:column;gap:5px}
+.f.full{grid-column:1/-1}
+
+label{
+  font-family:var(--hf);font-weight:700;font-size:.78rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--light);
+}
+label .req{color:var(--red);margin-left:2px}
+
+input,select{
+  width:100%;
+  background:var(--s2);
+  border:1.5px solid var(--border);
+  border-radius:5px;
+  color:var(--white);
+  font-family:var(--bf);font-size:.98rem;font-weight:500;
+  padding:13px 14px;
+  outline:none;
+  -webkit-appearance:none;appearance:none;
+  transition:border-color .18s,box-shadow .18s,background .18s;
+}
+input::placeholder{color:rgba(255,255,255,0.18)}
+input:focus,select:focus{
+  border-color:var(--red);
+  background:var(--s3);
+  box-shadow:0 0 0 3px var(--red-glow);
+}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:38px;cursor:pointer;
+}
+select option{background:#1a1a1a;color:var(--white)}
+
+/* ── PILL MULTISELECT ── */
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills input[type=checkbox]{display:none}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 16px;border-radius:100px;
+  border:1.5px solid var(--border);background:var(--s2);
+  font-family:var(--hf);font-weight:700;font-size:.9rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--light);
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  transition:all .15s;
+}
+.pill:active{transform:scale(.96)}
+.pill .dot{
+  width:13px;height:13px;border-radius:50%;
+  border:1.5px solid var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;
+}
+.pill .dot svg{width:7px;height:7px;stroke:var(--white);stroke-width:2.5;fill:none;opacity:0;transition:opacity .15s}
+.pills input:checked+.pill{
+  border-color:var(--red);
+  background:rgba(200,16,46,0.13);
+  color:var(--white);
+  box-shadow:0 0 0 1px var(--red);
+}
+.pills input:checked+.pill .dot{background:var(--red);border-color:var(--red)}
+.pills input:checked+.pill .dot svg{opacity:1}
+
+/* ── VALIDATION ── */
+.ferr{font-size:.76rem;color:#ff6060;display:none;font-weight:500}
+.f.err input,.f.err select{border-color:#ff4444;box-shadow:0 0 0 3px rgba(255,68,68,.18)}
+.f.err .ferr{display:block}
+
+/* ── SUBMIT ── */
+.submit-wrap{margin-top:30px;position:relative}
+
+.submit-btn{
+  width:100%;padding:18px;
+  background:var(--red);border:none;border-radius:6px;
+  color:var(--white);
+  font-family:var(--hf);font-weight:900;font-size:1.3rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;overflow:hidden;position:relative;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.submit-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(255,255,255,.1),transparent 50%);
+  pointer-events:none;
+}
+.submit-btn:hover{background:var(--red2);box-shadow:0 8px 28px var(--red-glow)}
+.submit-btn:active{transform:scale(.98)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-spinner{
+  display:none;width:20px;height:20px;margin:0 auto;
+  border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;
+  border-radius:50%;animation:spin .7s linear infinite;
+}
+.submit-btn.loading .btn-label{display:none}
+.submit-btn.loading .btn-spinner{display:block}
+
+.form-note{
+  text-align:center;margin-top:16px;
+  font-size:.73rem;color:var(--muted);line-height:1.5;
+}
+
+/* ── SUCCESS ── */
+#success{
+  display:none;position:fixed;inset:0;
+  background:var(--black);z-index:200;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 24px;text-align:center;
+}
+#success.on{display:flex;animation:fadeIn .4s ease both}
+
+.s-logo{margin-bottom:16px;animation:slideDown .5s .05s both cubic-bezier(.22,1,.36,1)}
+.s-logo svg{width:min(140px,38vw);height:auto}
+
+.s-check{
+  width:72px;height:72px;border-radius:50%;
+  border:2px solid var(--red);background:rgba(200,16,46,.1);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  animation:popIn .5s .2s both cubic-bezier(.22,1,.36,1);
+}
+.s-check svg{width:32px;height:32px;stroke:var(--red);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+.s-title{
+  font-family:var(--hf);font-weight:900;
+  font-size:clamp(2.4rem,10vw,3.2rem);
+  text-transform:uppercase;letter-spacing:.03em;line-height:1;
+  animation:slideDown .5s .28s both cubic-bezier(.22,1,.36,1);
+}
+.s-bar{width:48px;height:3px;background:var(--red);border-radius:2px;margin:14px auto;animation:slideDown .5s .35s both cubic-bezier(.22,1,.36,1)}
+.s-sub{
+  font-size:1rem;color:var(--light);line-height:1.55;max-width:300px;
+  animation:slideDown .5s .42s both cubic-bezier(.22,1,.36,1);
+}
+.s-sub strong{color:var(--white)}
+
+/* ── KEYFRAMES ── */
+@keyframes slideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--s3);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-stripe">
+    <div class="hero-inner">
+      <div class="logo-lockup">
+        <!-- D1 Training Primary Vertical Logo — colours overridden for red hero bg -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 257.79 248.83">
+          <defs><style>
+            .h1{fill-rule:evenodd}.h1,.h2{fill:#fff}
+            .h3{fill:rgba(0,0,0,0.25)}
+            .h4{fill:rgba(255,255,255,0.5)}
+          </style></defs>
+          <g><g>
+            <rect x="12.24" y="12.06" width="220.9" height="178.82" rx="17.21" ry="17.21" fill="rgba(0,0,0,0.2)"/>
+            <path class="h4" d="M215.93,12.06c9.51,0,17.21,7.71,17.21,17.21v144.4c0,9.51-7.7,17.21-17.21,17.21H29.45c-9.51,0-17.21-7.71-17.21-17.21V29.28c0-9.51,7.71-17.21,17.21-17.21h186.48M215.93,4.85H29.45C15.98,4.85,5.02,15.81,5.02,29.28v144.4c0,13.47,10.96,24.43,24.43,24.43h186.48c13.47,0,24.43-10.96,24.43-24.43V29.28c0-13.47-10.96-24.43-24.43-24.43h0Z"/>
+            <g>
+              <path class="h1" d="M50.06,41.38c25.4.19,48.31-2.39,64.11,6.73,9.8,5.66,17.37,13.23,22.43,23.07,19.45,37.77-6.09,81.84-41.34,84.95-15.06,1.32-27.9.37-45.51.31V42.34c-.03-.45-.05-.91.32-.96ZM77.31,67.98v62.5c13.57.88,22.61-.69,29.49-8.33,14.37-15.94,9.34-49.73-12.51-54.49-5.24-1.14-10.05-.34-16.66-.64-.37.05-.34.51-.32.96Z"/>
+              <path class="h1" d="M188.85,48.11v76.28h-18.91c-.11-11.42.14-27.02,0-40.38-.05-4.38.36-9.87-.96-12.18-2.15-3.76-7.97-1.97-12.18-2.56v-8.97c9.29-1.82,15.85-6.37,21.15-12.18h10.9Z"/>
+            </g>
+            <rect class="h2" x="155.18" y="139.46" width="51.94" height="16.57"/>
+            <path class="h4" d="M252.76,193.04c0,1.59-.56,2.95-1.69,4.07s-2.48,1.69-4.07,1.69-2.95-.56-4.07-1.69c-1.13-1.13-1.69-2.48-1.69-4.07s.56-2.95,1.69-4.07c1.13-1.13,2.48-1.69,4.07-1.69s2.95.56,4.07,1.69,1.69,2.48,1.69,4.07ZM251.49,193.04c0-1.24-.44-2.3-1.32-3.19-.88-.89-1.94-1.34-3.18-1.34s-2.3.45-3.17,1.34c-.88.89-1.32,1.96-1.32,3.19s.44,2.3,1.32,3.2c.88.89,1.94,1.34,3.17,1.34s2.3-.45,3.18-1.34c.88-.89,1.32-1.96,1.32-3.2ZM250.24,195.77h-1.81l-1.74-2.11h-.57v2.11h-1.41v-5.74h2.18c.4,0,.73.02.97.05.24.03.49.11.73.24.26.15.45.32.58.53s.18.47.18.78c0,.42-.12.76-.35,1.03s-.54.48-.92.63l2.17,2.47ZM247.77,191.74c0-.12-.03-.23-.08-.33s-.14-.18-.26-.24c-.11-.06-.24-.1-.38-.12s-.31-.02-.49-.02h-.45v1.61h.34c.24,0,.44-.02.61-.05.17-.03.3-.09.41-.17.1-.07.18-.17.23-.28.05-.11.07-.25.07-.4Z"/>
+            <g>
+              <path class="h2" d="M24.6,219.72h-8.85v-4.91h24.57v4.91h-8.81v23.81h-6.91v-23.81Z"/>
+              <path class="h2" d="M45.18,214.81h12.93c3.84,0,6.61.46,8.32,1.39,1.71.93,2.57,2.49,2.57,4.67v5.05c0,1.68-.6,3-1.79,3.96-1.2.96-2.78,1.57-4.76,1.84l8.32,11.82h-7.97l-7.53-11.29h-3.19v11.29h-6.91v-28.73ZM58.02,227.69c1.62,0,2.73-.21,3.32-.64.59-.43.89-1.26.89-2.5v-2.04c0-1.06-.32-1.79-.95-2.19-.63-.4-1.72-.6-3.25-.6h-5.93v7.97h5.93Z"/>
+              <path class="h2" d="M84.14,214.81h8.41l10.36,28.73h-6.99l-2.57-7.57h-10.49l-2.52,7.57h-6.82l10.62-28.73ZM91.84,231.37l-3.63-10.8h-.18l-3.63,10.8h7.44Z"/>
+              <path class="h2" d="M106.98,214.81h6.91v28.73h-6.91v-28.73Z"/>
+              <path class="h2" d="M120.97,214.81h6.99l13.9,19.61v-19.61h6.15v28.73h-6.99l-13.9-19.92v19.92h-6.15v-28.73Z"/>
+              <path class="h2" d="M155.09,214.81h6.91v28.73h-6.91v-28.73Z"/>
+              <path class="h2" d="M169.08,214.81h6.99l13.9,19.61v-19.61h6.15v28.73h-6.99l-13.9-19.92v19.92h-6.15v-28.73Z"/>
+              <path class="h2" d="M212.06,243.76c-1.27-.15-2.52-.4-3.76-.75-1.33-.35-2.42-.83-3.28-1.44-.86-.6-1.55-1.39-2.08-2.37-.53-1.03-.8-2.21-.8-3.54v-11.95c0-1.45.29-2.75.89-3.92.59-1.17,1.39-2.09,2.39-2.77.94-.62,2.07-1.15,3.39-1.59,1.31-.44,2.6-.74,3.87-.89,1.06-.12,2.35-.18,3.85-.18,4.07,0,7.97.31,11.68.93v5.22c-3.42-.83-7.32-1.24-11.68-1.24-4.99,0-7.48,1.45-7.48,4.34v11.55c0,1.42.67,2.42,2.01,3.01s3.37.89,6.09.89c1.45,0,2.99-.22,4.65-.66v-6.68h-4.69v-4.52h11.29v14.92c-1.48.53-3.36.97-5.64,1.33-2.29.35-4.39.53-6.31.53-1.65,0-3.11-.07-4.38-.22Z"/>
+            </g>
+          </g></g>
+        </svg>
+      </div>
+
+      <h1 class="hero-headline">Train Like<br>an Athlete</h1>
+
+      <div class="tagline-wrap">
+        <span class="tagline-main">You pick the goal. We help you get there.</span>
+        <span class="tagline-event">Fenton Outdoor Workout</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FORM -->
+<main class="form-wrap">
+  <form id="leadForm" novalidate>
+
+    <!-- SECTION 1: CONTACT -->
+    <div class="sec">
+      <span class="sec-num">1</span>
+      <span class="sec-title">Contact Info</span>
+    </div>
+
+    <div class="row">
+      <div class="f" id="f-firstName">
+        <label for="firstName">First Name <span class="req">*</span></label>
+        <input type="text" id="firstName" name="firstName" placeholder="Alex" autocomplete="given-name"/>
+        <span class="ferr">Required</span>
+      </div>
+      <div class="f" id="f-lastName">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Smith" autocomplete="family-name"/>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <div class="f" id="f-phone">
+        <label for="phone">Phone <span class="req">*</span></label>
+        <input type="tel" id="phone" name="phone" placeholder="(919) 555-0100" autocomplete="tel" inputmode="tel"/>
+        <span class="ferr">Valid phone required</span>
+      </div>
+      <div class="f" id="f-email">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email"/>
+        <span class="ferr">Invalid email</span>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <div class="f" id="f-zip">
+        <label for="zip">Zip Code</label>
+        <input type="text" id="zip" name="zip" placeholder="27513" inputmode="numeric" maxlength="10"/>
+      </div>
+    </div>
+
+    <!-- SECTION 2: TRAINING -->
+    <div class="sec">
+      <span class="sec-num">2</span>
+      <span class="sec-title">Your Training</span>
+    </div>
+
+    <div class="f">
+      <label for="goal">Primary Goal</label>
+      <select id="goal" name="goal">
+        <option value="" disabled selected>Select your goal…</option>
+        <option>Build strength</option>
+        <option>Lose weight</option>
+        <option>Athletic performance</option>
+        <option>Youth training</option>
+        <option value="Speed &amp; agility">Speed &amp; agility</option>
+        <option>General fitness</option>
+        <option>Not sure yet</option>
+      </select>
+    </div>
+
+    <!-- SECTION 3: ABOUT YOU -->
+    <div class="sec">
+      <span class="sec-num">3</span>
+      <span class="sec-title">One More Thing</span>
+    </div>
+
+    <div class="f">
+      <label for="source">How did you hear about us?</label>
+      <select id="source" name="source">
+        <option value="" disabled selected>Select one…</option>
+        <option>Personal referral</option>
+        <option>Social media</option>
+        <option>Saw the location</option>
+        <option>This event</option>
+        <option value="Email/text">Email / text</option>
+        <option>D1 website</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-label">Claim My Spot →</span>
+        <span class="btn-spinner"></span>
+      </button>
+    </div>
+
+    <p class="form-note">By submitting you agree to be contacted by D1 Training Cary.<br>We respect your privacy — your info is never shared.</p>
+
+  </form>
+</main>
+
+<!-- SUCCESS -->
+<div id="success">
+  <div class="s-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 257.79 248.83">
+      <defs><style>
+        .sc1{fill-rule:evenodd}.sc1,.sc2{fill:#fff}
+        .sc3{fill:#c8102e}.sc4{fill:#888a8d}
+      </style></defs>
+      <g><g>
+        <path class="sc3" d="M29.45,12.06h186.47c9.5,0,17.21,7.71,17.21,17.21v144.4c0,9.5-7.71,17.21-17.21,17.21H29.45c-9.5,0-17.21-7.71-17.21-17.21V29.28c0-9.5,7.71-17.21,17.21-17.21Z"/>
+        <path class="sc4" d="M215.93,12.06c9.51,0,17.21,7.71,17.21,17.21v144.4c0,9.51-7.7,17.21-17.21,17.21H29.45c-9.51,0-17.21-7.71-17.21-17.21V29.28c0-9.51,7.71-17.21,17.21-17.21h186.48M215.93,4.85H29.45C15.98,4.85,5.02,15.81,5.02,29.28v144.4c0,13.47,10.96,24.43,24.43,24.43h186.48c13.47,0,24.43-10.96,24.43-24.43V29.28c0-13.47-10.96-24.43-24.43-24.43h0Z"/>
+        <g>
+          <path class="sc1" d="M50.06,41.38c25.4.19,48.31-2.39,64.11,6.73,9.8,5.66,17.37,13.23,22.43,23.07,19.45,37.77-6.09,81.84-41.34,84.95-15.06,1.32-27.9.37-45.51.31V42.34c-.03-.45-.05-.91.32-.96ZM77.31,67.98v62.5c13.57.88,22.61-.69,29.49-8.33,14.37-15.94,9.34-49.73-12.51-54.49-5.24-1.14-10.05-.34-16.66-.64-.37.05-.34.51-.32.96Z"/>
+          <path class="sc1" d="M188.85,48.11v76.28h-18.91c-.11-11.42.14-27.02,0-40.38-.05-4.38.36-9.87-.96-12.18-2.15-3.76-7.97-1.97-12.18-2.56v-8.97c9.29-1.82,15.85-6.37,21.15-12.18h10.9Z"/>
+        </g>
+        <rect class="sc2" x="155.18" y="139.46" width="51.94" height="16.57"/>
+        <path class="sc4" d="M252.76,193.04c0,1.59-.56,2.95-1.69,4.07s-2.48,1.69-4.07,1.69-2.95-.56-4.07-1.69c-1.13-1.13-1.69-2.48-1.69-4.07s.56-2.95,1.69-4.07c1.13-1.13,2.48-1.69,4.07-1.69s2.95.56,4.07,1.69,1.69,2.48,1.69,4.07ZM251.49,193.04c0-1.24-.44-2.3-1.32-3.19-.88-.89-1.94-1.34-3.18-1.34s-2.3.45-3.17,1.34c-.88.89-1.32,1.96-1.32,3.19s.44,2.3,1.32,3.2c.88.89,1.94,1.34,3.17,1.34s2.3-.45,3.18-1.34c.88-.89,1.32-1.96,1.32-3.2ZM250.24,195.77h-1.81l-1.74-2.11h-.57v2.11h-1.41v-5.74h2.18c.4,0,.73.02.97.05.24.03.49.11.73.24.26.15.45.32.58.53s.18.47.18.78c0,.42-.12.76-.35,1.03s-.54.48-.92.63l2.17,2.47ZM247.77,191.74c0-.12-.03-.23-.08-.33s-.14-.18-.26-.24c-.11-.06-.24-.1-.38-.12s-.31-.02-.49-.02h-.45v1.61h.34c.24,0,.44-.02.61-.05.17-.03.3-.09.41-.17.1-.07.18-.17.23-.28.05-.11.07-.25.07-.4Z"/>
+        <g>
+          <path class="sc3" d="M24.6,219.72h-8.85v-4.91h24.57v4.91h-8.81v23.81h-6.91v-23.81Z"/>
+          <path class="sc3" d="M45.18,214.81h12.93c3.84,0,6.61.46,8.32,1.39,1.71.93,2.57,2.49,2.57,4.67v5.05c0,1.68-.6,3-1.79,3.96-1.2.96-2.78,1.57-4.76,1.84l8.32,11.82h-7.97l-7.53-11.29h-3.19v11.29h-6.91v-28.73ZM58.02,227.69c1.62,0,2.73-.21,3.32-.64.59-.43.89-1.26.89-2.5v-2.04c0-1.06-.32-1.79-.95-2.19-.63-.4-1.72-.6-3.25-.6h-5.93v7.97h5.93Z"/>
+          <path class="sc3" d="M84.14,214.81h8.41l10.36,28.73h-6.99l-2.57-7.57h-10.49l-2.52,7.57h-6.82l10.62-28.73ZM91.84,231.37l-3.63-10.8h-.18l-3.63,10.8h7.44Z"/>
+          <path class="sc3" d="M106.98,214.81h6.91v28.73h-6.91v-28.73Z"/>
+          <path class="sc3" d="M120.97,214.81h6.99l13.9,19.61v-19.61h6.15v28.73h-6.99l-13.9-19.92v19.92h-6.15v-28.73Z"/>
+          <path class="sc3" d="M155.09,214.81h6.91v28.73h-6.91v-28.73Z"/>
+          <path class="sc3" d="M169.08,214.81h6.99l13.9,19.61v-19.61h6.15v28.73h-6.99l-13.9-19.92v19.92h-6.15v-28.73Z"/>
+          <path class="sc3" d="M212.06,243.76c-1.27-.15-2.52-.4-3.76-.75-1.33-.35-2.42-.83-3.28-1.44-.86-.6-1.55-1.39-2.08-2.37-.53-1.03-.8-2.21-.8-3.54v-11.95c0-1.45.29-2.75.89-3.92.59-1.17,1.39-2.09,2.39-2.77.94-.62,2.07-1.15,3.39-1.59,1.31-.44,2.6-.74,3.87-.89,1.06-.12,2.35-.18,3.85-.18,4.07,0,7.97.31,11.68.93v5.22c-3.42-.83-7.32-1.24-11.68-1.24-4.99,0-7.48,1.45-7.48,4.34v11.55c0,1.42.67,2.42,2.01,3.01s3.37.89,6.09.89c1.45,0,2.99-.22,4.65-.66v-6.68h-4.69v-4.52h11.29v14.92c-1.48.53-3.36.97-5.64,1.33-2.29.35-4.39.53-6.31.53-1.65,0-3.11-.07-4.38-.22Z"/>
+        </g>
+      </g></g>
+    </svg>
+  </div>
+  <div class="s-check">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2 class="s-title">You're In!</h2>
+  <div class="s-bar"></div>
+  <p class="s-sub">Welcome to <strong>D1 Training Cary</strong>. Our team will reach out shortly to get you set for the <strong>Fenton Outdoor Workout</strong>.</p>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlN4vK1l6A8r4zoL55DfSAv3sRqw-L651taQjStY5abM5KnGb1yoGztVs48I96D_hYew/exec';
+
+// Phone formatter
+document.getElementById('phone').addEventListener('input', function(){
+  let v = this.value.replace(/\D/g,'').slice(0,10);
+  if(v.length>=7) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6);
+  else if(v.length>=4) v='('+v.slice(0,3)+') '+v.slice(3);
+  this.value=v;
+});
+
+function markOk(id){ document.getElementById('f-'+id)?.classList.remove('err') }
+function markErr(id){ document.getElementById('f-'+id)?.classList.add('err') }
+
+function validate(){
+  let ok=true;
+  const fn=document.getElementById('firstName').value.trim();
+  fn?(markOk('firstName')):(markErr('firstName'),ok=false);
+  const ph=document.getElementById('phone').value.replace(/\D/g,'');
+  ph.length>=10?(markOk('phone')):(markErr('phone'),ok=false);
+  const em=document.getElementById('email').value.trim();
+  (!em||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))?(markOk('email')):(markErr('email'),ok=false);
+  return ok;
+}
+
+function getData(){
+  return {
+    timestamp: new Date().toISOString(),
+    first:     document.getElementById('firstName').value.trim(),
+    last:      document.getElementById('lastName').value.trim(),
+    phone:     document.getElementById('phone').value.trim(),
+    email:     document.getElementById('email').value.trim(),
+    zip:       document.getElementById('zip').value.trim(),
+    training:  [...document.querySelectorAll('input[name="who"]:checked')].map(c=>c.value).join(', '),
+    goal:      document.getElementById('goal').value,
+    source:    document.getElementById('source').value
+  };
+}
+
+document.getElementById('leadForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  if(!validate()){
+    document.querySelector('.err')?.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.classList.add('loading');
+  try{
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(getData())});
+  }catch(err){ console.warn(err); }
+  btn.classList.remove('loading');
+  document.getElementById('success').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// Clear errors on change
+document.querySelectorAll('input,select').forEach(el=>{
+  el.addEventListener('input',()=>el.closest('.f')?.classList.remove('err'));
+});
+</script>
+</body>
+</html>
